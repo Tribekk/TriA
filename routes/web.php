@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WorkerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 //methods Pages
 Route::controller(PageController::class)->group(function () {
     Route::get('/', 'home')->name('home');
+    Route::post('/' , 'homeForm');
     Route::get('/signup', 'signup')->name('signup');
     Route::get('/login', 'login')->name('login');
     Route::middleware('auth')->group(function () {
@@ -46,6 +49,14 @@ Route::controller(PageController::class)->group(function () {
             Route::get('/product', 'product')->name('product');
             Route::get('/edit/product/{product}', 'editProduct')->name('edit.product');
             Route::get('/add/product', 'addProduct')->name('add.product');
+        });
+        Route::middleware('role:admin|manager|beginner')->group(function () {
+            Route::get('/order', 'orders')->name('order');
+            Route::get('/order/{order}', 'order')->name('order-order');
+        });
+        Route::middleware('role:admin')->group(function () {
+            Route::get('/worker', 'worker')->name('worker');
+            Route::get('/edit/worker/{worker}', 'editWorker')->name('edit.worker');
         });
     });
 });
@@ -87,4 +98,15 @@ Route::controller(ProductController::class)->group(function () {
     Route::post('/edit/product/{product}', 'edit');
     Route::post('/add/product', 'add');
     Route::get('delete/product/{product}', 'delete')->name('delete.product');
+});
+
+//methods Order
+Route::controller(OrderController::class)->group(function () {
+    Route::post('/order/{order}', 'submit');
+});
+
+//methods Worker
+Route::controller(WorkerController::class)->group(function () {
+    Route::post('/edit/worker/{worker}', 'edit');
+    Route::get('delete/worker/{user}', 'delete')->name('delete.worker');
 });

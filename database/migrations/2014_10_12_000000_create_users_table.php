@@ -18,8 +18,10 @@ return new class extends Migration
             $table->string('otchestvo');
             $table->string('login')->unique();
             $table->string('password');
-            $table->date('burn');
-            $table->string('passport');
+            $table->date('burn')->nullable();
+            $table->string('passport')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('number')->unique()->nullable();
             $table->timestamps();
         });
     }

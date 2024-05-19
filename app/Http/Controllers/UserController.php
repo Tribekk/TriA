@@ -23,7 +23,7 @@ class UserController extends Controller
             'firstname' => $request->firstname,
             'otchestvo' => $request->otchestvo
         ]);
-        $user->assignRole('beginner');
+        $user->assignRole('user');
         if ($request['check'] != '') {
             auth()->login($user);
         }
@@ -39,12 +39,14 @@ class UserController extends Controller
         return redirect(route('login'))->withErrors(['login' => 'Не верно введён логин и/или пароль']);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, User $user)
     {
         $request->validate([
             'firstname' => 'required|string|max:255',
             'name' => 'required|string|max:255',
-            'otchestvo' => 'required|string|max:255'
+            'otchestvo' => 'required|string|max:255',
+            'email' => 'email|unique:users,email,'. $user->id,
+            'number' => 'integer|unique:users,number,'. $user->id
         ]);
         $user = auth()->user();
 
@@ -53,6 +55,8 @@ class UserController extends Controller
         $user->otchestvo = $request->otchestvo;
         $user->burn = $request->burn;
         $user->passport = $request->passport;
+        $user->email = $request->email;
+        $user->number = $request->number;
 
         $user->save();
 

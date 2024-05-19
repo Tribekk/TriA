@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Filters\QueryFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -23,7 +25,9 @@ class User extends Authenticatable
         'login',
         'password',
         'firstname',
-        'otchestvo'
+        'otchestvo',
+        'email',
+        'number'
     ];
 
     /**
@@ -44,4 +48,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function scopeFilter(Builder $builder, QueryFilter $filter): Builder
+    {
+        return $filter->apply($builder);
+    }
 }

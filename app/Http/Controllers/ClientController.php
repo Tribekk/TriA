@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -28,13 +29,13 @@ class ClientController extends Controller
         return redirect(route('edit.client', ['client'=>$newClient]));
     }
 
-    public function edit (Request $request, Client $client){
+    public function edit (Request $request, User $client){
         $request->validate([
             'name' => 'required|max:255|string',
             'firstname' => 'required|max:255|string',
             'otchestvo' => 'required|max:255|string',
-            'email' => 'email|required|max:255|unique:clients,email,' .$client->id,
-            'number' => 'integer|required|digits:11|unique:clients,number,' .$client->id
+            'email' => 'nullable|email|max:255|unique:users,email,' .$client->id,
+            'number' => 'nullable|numeric|digits:11|unique:users,number,' .$client->id
         ]);
 
         $client->name = $request->name;

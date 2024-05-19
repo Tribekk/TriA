@@ -37,7 +37,7 @@
 
         <div class="form-floating  mt-3">
             <input type="date" class="form-control @error('burn') is-invalid @enderror" name="burn"
-                   value="{{$user->burn}}" id="floatingInput" placeholder="name@example.com" required>
+                   value="{{$user->burn}}" id="floatingInput" placeholder="name@example.com">
             <label for="floatingInput" style="color: black">Дата рождения</label>
         </div>
         @error('burn')
@@ -46,12 +46,31 @@
 
         <div class="form-floating  mt-3">
             <input type="text" class="form-control @error('passport') is-invalid @enderror" name="passport"
-                   value="{{$user->passport}}" id="floatingInput" placeholder="name@example.com" required>
+                   value="{{$user->passport}}" id="floatingInput" placeholder="name@example.com">
             <label for="floatingInput" style="color: black">Паспорт</label>
         </div>
         @error('passport')
         <div class="alert alert-danger mt-2">{{ $message }}</div>
         @enderror
+
+        <div class="form-floating  mt-3">
+            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
+                   value="{{$user->email}}" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput" style="color: black">Почта</label>
+        </div>
+        @error('email')
+        <div class="alert alert-danger mt-2">{{ $message }}</div>
+        @enderror
+
+        <div class="form-floating  mt-3">
+            <input type="text" class="form-control @error('number') is-invalid @enderror" name="number"
+                   value="{{$user->number}}" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput" style="color: black">Номер телефона</label>
+        </div>
+        @error('number')
+        <div class="alert alert-danger mt-2">{{ $message }}</div>
+        @enderror
+
         <button class="btn btn-primary w-100 py-2 mt-3" type="submit">Обновить данные</button>
     </form>
     <div class="row m-5">

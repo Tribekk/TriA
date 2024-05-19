@@ -20,8 +20,5 @@ class Client extends Model
         'number'
     ];
 
-    public function scopeFilter(Builder $builder, QueryFilter $filter): Builder
-    {
-        return $filter->apply($builder);
-    }
+
 }

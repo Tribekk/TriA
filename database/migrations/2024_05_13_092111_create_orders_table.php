@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->float('price');
+            $table->string('name');
+            $table->string('email');
+            $table->string('title');
+            $table->text('body');
+            $table->boolean('isReader')->default(false);
             $table->timestamps();
         });
     }

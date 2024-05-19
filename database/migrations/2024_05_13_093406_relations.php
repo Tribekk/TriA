@@ -16,10 +16,6 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\Client::class)
-                ->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\Order::class)
                 ->constrained()
                 ->cascadeOnUpdate()
@@ -28,13 +24,6 @@ return new class extends Migration
 
         Schema::table('products', function (Blueprint $table) {
             $table->foreignIdFor(\App\Models\Category::class)
-                ->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-        });
-
-        Schema::table('orders', function (Blueprint $table) {
-            $table->foreignIdFor(\App\Models\Product::class)
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
