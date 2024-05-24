@@ -121,4 +121,5 @@ Route::controller(\App\Http\Controllers\OrderListController::class)->group(funct
     Route::get('/cart/plus/{id}', 'plus')->name('plus.id');
     Route::get('/cart/minus/{id}', 'minus')->name('minus.id');
     Route::get('/cart/delete/{id}', 'delete')->name('cart.delete');
+    Route::post('/cart', 'create');
 });

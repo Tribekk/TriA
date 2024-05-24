@@ -6,15 +6,43 @@
                @endisset placeholder="Найти продукт" aria-label="Search" name="search_field">
         <button type="submit" class="btn btn-outline-light text-bg-dark m-3">Найти</button>
     </form>
-    @foreach($products as $product)
-        <div class="row m-5">
-            <div class="col-lg-9">
-                <h1>{{$product->name}}</h1>
-                <p>{{$product->category->name}}</p>
-            </div>
-            <div class="col-lg-1">
-                    <a href="{{route('add.order.list', ['id'=>$product->id])}}"  class="btn btn-success px-5 py-3">Добавить</a>
-            </div>
-        </div>
+    <table class="border text-center">
+        <div class="d-flex">
+            <tr class="border">
+                <th style="width: 30%" class="border"><h5>Название</h5></th>
+                <th class="border"><h5>Категория</h5></th>
+                <th class="border"><h5>Измерение</h5></th>
+                <th class="border"><h5>Цена товара</h5></th>
+                <th class="border"><h5>В корзину</h5></th>
+            </tr>
+            @foreach($products as $product)
+                <tr>
+                    <td class="border p-3">
+                        <div>
+                            <h5>{{$product->name}}</h5>
+                        </div>
+                    </td>
+                    <td class="border">
+                        <div>
+                            <h5>{{$product->category->name}}</h5>
+                        </div>
+                    </td>
+                    <td class="border p-3">
+                        <div>
+                            <h5>{{$product->measurement}}</h5>
+                        </div>
+                    </td>
+                    <td class="border">
+                        <div>
+                            <h5>{{$product->price}} руб.</h5>
+                        </div>
+                    </td>
+                    <td class="border">
+                        <div>
+                            <a href="{{route('add.order.list', ['id'=>$product->id])}}"
+                               class="btn btn-success">Добавить</a>
+                        </div>
+                    </td>
+                </tr>
     @endforeach
 @endsection
