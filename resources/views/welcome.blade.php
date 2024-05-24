@@ -14,7 +14,7 @@
 <nav class="navbar navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand d-flex" href="{{route('home')}}"><img src="{{asset('img/Screenshot_6.png')}}" alt=""
-                                                     style="width: 100px">
+                                                                     style="width: 100px">
             <h1 class="ms-3 text-warning">ТриА</h1></a>
         <div class="d-flex">
             <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -61,7 +61,8 @@
             </svg>
             <div class="text-white">
                 <strong>ВРЕМЯ РАБОТЫ</strong>
-                <p class="link-warning link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">ПН-ПТ: 09-18 (+2 МСК)</p>
+                <p class="link-warning link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">ПН-ПТ:
+                    09-18 (+2 МСК)</p>
             </div>
         </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
@@ -99,16 +100,21 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark">
                                 <li><a class="dropdown-item" href="{{route('profile')}}">Профиль</a></li>
+                                @role('admin|beginner|manager')
                                 @role('admin')
                                 <li><a class="dropdown-item" href="{{route('role')}}">Роли</a></li>
+                                @endrole
                                 <li><a class="dropdown-item" href="{{route('client')}}">Клиенты</a></li>
                                 <li><a class="dropdown-item" href="{{route('category')}}">Категории</a></li>
                                 <li><a class="dropdown-item" href="{{route('product')}}">Продукты</a></li>
-                                <li><a class="dropdown-item" href="{{route('order')}}">Заявки</a></li>
+                                @can('Просмотр заявки')
+                                    <li><a class="dropdown-item" href="{{route('order')}}">Заявки</a></li>
+                                @endcan
                                 <li><a class="dropdown-item" href="{{route('worker')}}">Cотрудники</a></li>
                                 @endrole
                                 @role('user')
-                                <li><a class="dropdown-item" href="{{route('product')}}">Продукция</a></li>
+                                <li><a class="dropdown-item" href="{{route('user.product')}}">Продукция</a></li>
+                                <li><a class="dropdown-item" href="{{route('cart')}}">Корзина</a></li>
                                 @endrole
                                 <li>
                                     <hr class="dropdown-divider">

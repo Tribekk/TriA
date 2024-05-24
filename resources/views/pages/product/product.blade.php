@@ -13,10 +13,18 @@
                 <p>{{$product->category->name}}</p>
             </div>
             <div class="col-lg-4">
-                <a href="{{route('edit.product', ['product' => $product])}}" type="button" class="btn btn-primary px-3">Изменить</a>
-                <a href="{{route('delete.product', ['product' => $product])}}" type="button" class="btn btn-danger ms-2 px-3">Удалить</a>
+                @if(auth()->user()->can('Добавление продукции'))
+                    <a href="{{route('edit.product', ['product' => $product])}}" type="button"
+                       class="btn btn-primary px-3">Изменить</a>
+                @endif
+                @if(auth()->user()->can('Обновление продукции'))
+                    <a href="{{route('delete.product', ['product' => $product])}}" type="button"
+                       class="btn btn-danger ms-2 px-3">Удалить</a>
+                @endif
             </div>
         </div>
     @endforeach
-    <a href="{{route('add.product')}}" type="button" class="btn btn-success px-5 py-3">Добавить</a>
+    @if(auth()->user()->can('Удаление продукции'))
+        <a href="{{route('add.product')}}" type="button" class="btn btn-success px-5 py-3">Добавить</a>
+    @endif
 @endsection

@@ -49,7 +49,7 @@ class ClientController extends Controller
         return redirect(route('edit.client', ['client' => $client]));
     }
 
-    public function delete (Client $client){
+    public function delete (User $client){
         $client->delete();
 
         return redirect(route('client'));

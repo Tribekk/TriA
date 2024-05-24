@@ -5,6 +5,7 @@
             {{ session('success') }}
         </div>
     @endif
+    @if(auth()->user()->can('Просмотр заявки'))
     <div class="mb-3 mt-5">
         <label for="exampleFormControlInput1" class="form-label">Имя</label>
         <input type="text" class="form-control" value="{{$order->name}}" disabled readonly name="name" id="exampleFormControlInput1" placeholder="Иван">
@@ -21,7 +22,9 @@
         <label for="exampleFormControlTextarea1"  class="form-label">Сообщение</label>
         <textarea class="form-control" name="body" disabled readonly id="exampleFormControlTextarea1" rows="8">{{$order->body}}</textarea>
     </div>
+    @endif
     <hr>
+    @if(auth()->user()->can('Ответ на заявки'))
     <form method="post">
         @csrf
         <h1>Ответить пользователю</h1>
@@ -35,4 +38,5 @@
         </div>
         <button class="btn btn-success my-3 w-100 py-2" type="submit">Ответить</button>
     </form>
+    @endif
 @endsection

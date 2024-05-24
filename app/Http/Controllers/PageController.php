@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use App\Models\Client;
 
@@ -67,7 +68,8 @@ class PageController extends Controller
     }
 
     public function editRole(Role $role){
-        return view('pages.role.editRole', compact('role'));
+        $permissions = Permission::all();
+        return view('pages.role.editRole', compact('role', 'permissions'));
     }
 
     public function addRole (){

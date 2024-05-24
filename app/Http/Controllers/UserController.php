@@ -45,8 +45,8 @@ class UserController extends Controller
             'firstname' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'otchestvo' => 'required|string|max:255',
-            'email' => 'email|unique:users,email,'. $user->id,
-            'number' => 'integer|unique:users,number,'. $user->id
+            'email' => 'nullable|email|unique:users,email,'. $user->id,
+            'number' => 'nullable|integer|unique:users,number,'. $user->id
         ]);
         $user = auth()->user();
 

@@ -19,7 +19,9 @@
     <span class="visually-hidden">Новые уведомления</span>
   </span>
                     @endif</a>
-                <a href="" type="button" class="btn btn-danger ms-2 px-3">Удалить</a>
+                @if(auth()->user()->can('Удаление заявки'))
+                    <a href="" type="button" class="btn btn-danger ms-2 px-3">Удалить</a>
+                @endif
             </div>
         </div>
     @endforeach

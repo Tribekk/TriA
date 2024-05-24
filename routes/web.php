@@ -37,26 +37,26 @@ Route::controller(PageController::class)->group(function () {
         });
         Route::middleware('role:admin|manager|beginner')->group(function () {
             Route::get('/client', 'client')->name('client');
-            Route::get('/edit/client/{client}', 'editClient')->name('edit.client');
-            Route::get('/add/client', 'addClient')->name('add.client');
+            Route::get('/edit/client/{client}', 'editClient')->name('edit.client')->middleware('can:Изменение клиентов');
+            Route::get('/add/client', 'addClient')->name('add.client')->middleware('can:Изменение клиентов');
         });
         Route::middleware('role:admin|manager|beginner')->group(function () {
             Route::get('/category', 'category')->name('category');
-            Route::get('/edit/category/{category}', 'editCategory')->name('edit.category');
-            Route::get('/add/category', 'addCategory')->name('add.category');
+            Route::get('/edit/category/{category}', 'editCategory')->name('edit.category')->middleware('can:Обновление категорий');
+            Route::get('/add/category', 'addCategory')->name('add.category')->middleware('can:Добавление категорий');
         });
         Route::middleware('role:admin|manager|beginner')->group(function () {
             Route::get('/product', 'product')->name('product');
-            Route::get('/edit/product/{product}', 'editProduct')->name('edit.product');
-            Route::get('/add/product', 'addProduct')->name('add.product');
+            Route::get('/edit/product/{product}', 'editProduct')->name('edit.product')->middleware('can:Добавление продукции');
+            Route::get('/add/product', 'addProduct')->name('add.product')->middleware('can:Изменение клиентов');
         });
         Route::middleware('role:admin|manager|beginner')->group(function () {
-            Route::get('/order', 'orders')->name('order');
-            Route::get('/order/{order}', 'order')->name('order-order');
+            Route::get('/order', 'orders')->name('order')->middleware('can:Просмотр заявки');
+            Route::get('/order/{order}', 'order')->name('order-order')->middleware('can:Просмотр заявки');
         });
         Route::middleware('role:admin')->group(function () {
             Route::get('/worker', 'worker')->name('worker');
-            Route::get('/edit/worker/{worker}', 'editWorker')->name('edit.worker');
+            Route::get('/edit/worker/{worker}', 'editWorker')->name('edit.worker')->middleware('can:Изменение сотрудника');
         });
     });
 });
@@ -73,40 +73,52 @@ Route::controller(UserController::class)->group(function () {
 });
 
 //methods Roles
-Route::controller(RoleController::class)->group(function () {
-    Route::post('/edit/role/{role}', 'edit');
-    Route::post('/add/role', 'add');
-    Route::get('delete/role/{role}', 'delete')->name('delete.role');
+Route::middleware('role:admin')->group(function (){
+    Route::controller(RoleController::class)->group(function () {
+        Route::post('/edit/role/{role}', 'edit');
+        Route::post('/add/role', 'add');
+        Route::get('delete/role/{role}', 'delete')->name('delete.role');
+    });
 });
 
 //methods Client
 Route::controller(ClientController::class)->group(function () {
-    Route::post('/edit/client/{client}', 'edit');
-    Route::post('/add/client', 'add');
-    Route::get('delete/client/{client}', 'delete')->name('delete.client');
+    Route::post('/edit/client/{client}', 'edit')->middleware('can:Изменение клиентов');
+    Route::post('/add/client', 'add')->middleware('can:Изменение клиентов');
+    Route::get('delete/client/{client}', 'delete')->name('delete.client')->middleware('can:Удаление клиентов');
 });
 
 //methods Category
 Route::controller(CategoryController::class)->group(function () {
-    Route::post('/edit/category/{category}', 'edit');
-    Route::post('/add/category', 'add');
-    Route::get('delete/category/{category}', 'delete')->name('delete.category');
+    Route::post('/edit/category/{category}', 'edit')->middleware('can:Обновление категорий');
+    Route::post('/add/category', 'add')->middleware('can:Добавление категорий');
+    Route::get('delete/category/{category}', 'delete')->name('delete.category')->middleware('can:Удаление категорий');
 });
 
 //methods Product
 Route::controller(ProductController::class)->group(function () {
-    Route::post('/edit/product/{product}', 'edit');
-    Route::post('/add/product', 'add');
-    Route::get('delete/product/{product}', 'delete')->name('delete.product');
+    Route::post('/edit/product/{product}', 'edit')->middleware('can:Обновление продукции');
+    Route::post('/add/product', 'add')->middleware('can:Добавление продукции');
+    Route::get('delete/product/{product}', 'delete')->name('delete.product')->middleware('can:Удаление продукции');
+    Route::get('/user/product', 'show')->name('user.product');
 });
 
 //methods Order
 Route::controller(OrderController::class)->group(function () {
-    Route::post('/order/{order}', 'submit');
+    Route::post('/order/{order}', 'submit')->middleware('can:Ответ на заявки');
 });
 
 //methods Worker
 Route::controller(WorkerController::class)->group(function () {
-    Route::post('/edit/worker/{worker}', 'edit');
-    Route::get('delete/worker/{user}', 'delete')->name('delete.worker');
+    Route::post('/edit/worker/{worker}', 'edit')->middleware('can:Изменение сотрудника');
+    Route::get('delete/worker/{user}', 'delete')->name('delete.worker')->middleware('can:Удаление сотрудника');
+});
+
+//methods OrderList
+Route::controller(\App\Http\Controllers\OrderListController::class)->group(function (){
+    Route::get('/add/order/list/{id}', 'add')->name('add.order.list');
+    Route::get('/cart', 'show')->name('cart');
+    Route::get('/cart/plus/{id}', 'plus')->name('plus.id');
+    Route::get('/cart/minus/{id}', 'minus')->name('minus.id');
+    Route::get('/cart/delete/{id}', 'delete')->name('cart.delete');
 });

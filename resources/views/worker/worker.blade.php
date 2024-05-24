@@ -13,8 +13,14 @@
                 <p>{{$worker->email}}</p>
             </div>
             <div class="col-lg-4">
-                <a href="{{route('edit.worker', ['worker'=>$worker->id])}}" type="button" class="btn btn-primary px-3">Изменить</a>
-                <a href="{{route('delete.worker', ['user'=>$worker->id])}}" type="button" class="btn btn-danger ms-2 px-3">Удалить</a>
+                @if(auth()->user()->can('Обновление продукции'))
+                    <a href="{{route('edit.worker', ['worker'=>$worker->id])}}" type="button"
+                       class="btn btn-primary px-3">Изменить</a>
+                @endif
+                @if(auth()->user()->can('Обновление продукции'))
+                    <a href="{{route('delete.worker', ['user'=>$worker->id])}}" type="button"
+                       class="btn btn-danger ms-2 px-3">Удалить</a>
+                @endif
             </div>
         </div>
     @endforeach

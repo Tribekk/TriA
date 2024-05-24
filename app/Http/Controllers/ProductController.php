@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\ProductFilter;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -44,5 +46,12 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect(route('product'));
+    }
+
+    public function show (ProductFilter $request)
+    {
+        $products = Product::filter($request)->get();
+        $categories = Category::all();
+        return view('user.product', compact('products', 'categories'));
     }
 }
