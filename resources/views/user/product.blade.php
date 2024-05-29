@@ -6,43 +6,20 @@
                @endisset placeholder="Найти продукт" aria-label="Search" name="search_field">
         <button type="submit" class="btn btn-outline-light text-bg-dark m-3">Найти</button>
     </form>
-    <table class="border text-center">
-        <div class="d-flex">
-            <tr class="border">
-                <th style="width: 30%" class="border"><h5>Название</h5></th>
-                <th class="border"><h5>Категория</h5></th>
-                <th class="border"><h5>Измерение</h5></th>
-                <th class="border"><h5>Цена товара</h5></th>
-                <th class="border"><h5>В корзину</h5></th>
-            </tr>
-            @foreach($products as $product)
-                <tr>
-                    <td class="border p-3">
-                        <div>
-                            <h5>{{$product->name}}</h5>
-                        </div>
-                    </td>
-                    <td class="border">
-                        <div>
-                            <h5>{{$product->category->name}}</h5>
-                        </div>
-                    </td>
-                    <td class="border p-3">
-                        <div>
-                            <h5>{{$product->measurement}}</h5>
-                        </div>
-                    </td>
-                    <td class="border">
-                        <div>
-                            <h5>{{$product->price}} руб.</h5>
-                        </div>
-                    </td>
-                    <td class="border">
-                        <div>
-                            <a href="{{route('add.order.list', ['id'=>$product->id])}}"
-                               class="btn btn-success">Добавить</a>
-                        </div>
-                    </td>
-                </tr>
-    @endforeach
+    <div class="container mt-5">
+        <h1>Товары</h1>
+        <div class="row mt-5">
+            @foreach($categories as $category)
+                <h2 class="mt-5">{{$category->name}}</h2>
+                @foreach($category->products as $product)
+                    <div class="col-lg-3 text-center mt-5">
+                        <img src="{{asset('storage/'. $product->image)}}" class="border rounded w-100" alt="">
+                        <h3>{{$product->price}} P.</h3>
+                        <h5>{{$product->name}}</h5>
+                        <a href="{{route('add.order.list', ['id' => $product->id])}}" type="button" class="btn btn-success">Добавить</a>
+                    </div>
+                @endforeach
+            @endforeach
+        </div>
+    </div>
 @endsection

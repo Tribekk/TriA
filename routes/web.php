@@ -29,7 +29,6 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/login', 'login')->name('login');
     Route::middleware('auth')->group(function () {
         Route::get('/profile', 'profile')->name('profile');
-        Route::get('/password/update', 'passwordUpdate')->name('password-update');
         Route::middleware('role:admin')->group(function () {
             Route::get('/role', 'role')->name('role');
             Route::get('/edit/role/{role}', 'editRole')->name('edit.role');
@@ -66,9 +65,13 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/signup', 'signup');
     Route::post('/login', 'login');
     Route::middleware('auth')->group(function () {
+        Route::get('/delete', 'destroy')->name('delete');
+        Route::get('/password', function () {
+            return view('user/password');
+        })->name('password');
         Route::get('/logout', 'logout')->name('logout');
         Route::post('/profile', 'update');
-        Route::post('/password/update', 'passwordUpdate');
+        Route::post('/password', 'password');
     });
 });
 
@@ -115,11 +118,14 @@ Route::controller(WorkerController::class)->group(function () {
 });
 
 //methods OrderList
-Route::controller(\App\Http\Controllers\OrderListController::class)->group(function (){
-    Route::get('/add/order/list/{id}', 'add')->name('add.order.list');
-    Route::get('/cart', 'show')->name('cart');
-    Route::get('/cart/plus/{id}', 'plus')->name('plus.id');
-    Route::get('/cart/minus/{id}', 'minus')->name('minus.id');
-    Route::get('/cart/delete/{id}', 'delete')->name('cart.delete');
-    Route::post('/cart', 'create');
+Route::middleware('auth')->group(function (){
+    Route::controller(\App\Http\Controllers\OrderListController::class)->group(function (){
+        Route::get('/add/order/list/{id}', 'add')->name('add.order.list');
+        Route::get('/cart', 'show')->name('cart');
+        Route::get('/cart/plus/{id}', 'plus')->name('plus.id');
+        Route::get('/cart/minus/{id}', 'minus')->name('minus.id');
+        Route::get('/cart/delete/{id}', 'delete')->name('cart.delete');
+        Route::post('/cart', 'create');
+    });
 });
+

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -69,8 +70,23 @@ class UserController extends Controller
         return redirect()->route('home');
     }
 
-    public function passwordUpdate(Request $request)
-    {
+    public function password(Request $request){
+        $request->validate([
+            "password" => ["required", "confirmed", "min:8"],
+            "oldPassword" => ['required']
+        ]);
+        $user = auth()->user();
+        if (Hash::check($request->oldPassword, $user->password)) {
+            $user->password = bcrypt($request->password);
+            $user->save();
+            return redirect(route('password'))->withErrors(['oldPassword' =>'Успех']);
+        }
+        return redirect(route('password'))->withErrors(['oldPassword' =>'Не верный пароль']);
+    }
 
+    public function destroy(){
+        auth()->user()->delete();
+
+        return view('user.login');
     }
 }

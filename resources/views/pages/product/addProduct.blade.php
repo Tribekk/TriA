@@ -1,6 +1,6 @@
 @extends('welcome')
 @section('content')
-    <form method="post" action="">
+    <form method="post" action="" enctype="multipart/form-data">
         @csrf
         <div class="d-flex justify-content-center">
             <a href="{{route('home')}}">
@@ -8,6 +8,11 @@
             </a>
         </div>
         <h1 class="my-3 fw-normal text-center">Создание продукта</h1>
+
+        <div class="form-floating mt-3">
+            <input class="form-control form-control-lg mt-3" id="formFileLg" type="file" name="file">
+            <label for="floatingName" style="color: black">Фото продукта</label>
+        </div>
 
         <div class="form-floating mt-3">
             <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}" name="name" id="floatingName" placeholder="Имя" required>
@@ -29,9 +34,9 @@
         <div class="form-floating mt-3">
             <select class="form-select" id="floatingSelect" name="measurement" aria-label="Floating label select example">
                 <option selected>Откройте это меню выбора</option>
-                <option value="1">шт.</option>
-                <option value="2">мес.</option>
-                <option value="3">др.</option>
+                <option value="шт.">шт.</option>
+                <option value="мес.">мес.</option>
+                <option value="др.">др.</option>
             </select>
             <label for="floatingSelect">Мера измерения</label>
         </div>
@@ -43,7 +48,7 @@
             <select class="form-select" id="floatingSelect" name="category_id" aria-label="Floating label select example">
                 <option selected>Откройте это меню выбора</option>
                 @foreach($categories as $category)
-                    <option value="{{$category->name}}">{{$category->name}}</option>
+                    <option value="{{$category->id}}">{{$category->name}}</option>
                 @endforeach
             </select>
             <label for="floatingSelect">Категория</label>

@@ -77,6 +77,9 @@
                         aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li><a class="dropdown-item" href="{{route('user.product')}}">Продукция</a></li>
+                </ul>
                 @guest()
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <li class="nav-item dropdown">
@@ -113,7 +116,6 @@
                                 <li><a class="dropdown-item" href="{{route('worker')}}">Cотрудники</a></li>
                                 @endrole
                                 @role('user')
-                                <li><a class="dropdown-item" href="{{route('user.product')}}">Продукция</a></li>
                                 <li><a class="dropdown-item" href="{{route('cart')}}">Корзина</a></li>
                                 @endrole
                                 <li>

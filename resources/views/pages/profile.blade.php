@@ -75,10 +75,10 @@
     </form>
     <div class="row m-5">
         <div class="col-lg-4">
-            <a href="" type="button" class="btn btn-warning"><h2 class="p-1">Изменить пароль</h2></a>
+            <a href="{{ route('password') }}" type="button" class="btn btn-warning"><h2 class="p-1">Изменить пароль</h2></a>
         </div>
         <div class="col-lg-4">
-            <a href="" type="button" class="btn btn-danger"><h2 class="p-1">Удалить аккаунт</h2></a>
+            <a href="{{ route('delete') }}" type="button" class="btn btn-danger"><h2 class="p-1">Удалить аккаунт</h2></a>
         </div>
     </div>
 @endsection
