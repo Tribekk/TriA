@@ -54,6 +54,9 @@ class ProductController extends Controller
 
     public function show (ProductFilter $request)
     {
+        if (isset($_GET['search_field']) && $_GET['search_field'] == ''){
+            return redirect(route('user.product'));
+        }
         $products = Product::filter($request)->get();
         $categories = Category::all();
         return view('user.product', compact('products', 'categories'));

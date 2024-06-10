@@ -6,20 +6,38 @@
                @endisset placeholder="Найти продукт" aria-label="Search" name="search_field">
         <button type="submit" class="btn btn-outline-light text-bg-dark m-3">Найти</button>
     </form>
-    <div class="container mt-5">
-        <h1>Товары</h1>
-        <div class="row mt-5">
-            @foreach($categories as $category)
-                <h2 class="mt-5">{{$category->name}}</h2>
-                @foreach($category->products as $product)
+    @if(isset($_GET['search_field']))
+        <div class="container mt-5">
+            <h1>Товары</h1>
+            <div class="row mt-5">
+                @foreach($products as $product)
                     <div class="col-lg-3 text-center mt-5">
                         <img src="{{asset('storage/'. $product->image)}}" class="border rounded w-100" alt="">
                         <h3>{{$product->price}} P.</h3>
                         <h5>{{$product->name}}</h5>
-                        <a href="{{route('add.order.list', ['id' => $product->id])}}" type="button" class="btn btn-success">Добавить</a>
+                        <a href="{{route('add.order.list', ['id' => $product->id])}}" type="button"
+                           class="btn btn-success">Добавить</a>
                     </div>
                 @endforeach
-            @endforeach
+            </div>
         </div>
-    </div>
+    @else
+        <div class="container mt-5">
+            <h1>Товары</h1>
+            <div class="row mt-5">
+                @foreach($categories as $category)
+                    <h2 class="mt-5">{{$category->name}}</h2>
+                    @foreach($category->products as $product)
+                        <div class="col-lg-3 text-center mt-5">
+                            <img src="{{asset('storage/'. $product->image)}}" class="border rounded w-100" alt="">
+                            <h3>{{$product->price}} P.</h3>
+                            <h5>{{$product->name}}</h5>
+                            <a href="{{route('add.order.list', ['id' => $product->id])}}" type="button"
+                               class="btn btn-success">Добавить</a>
+                        </div>
+                    @endforeach
+                @endforeach
+            </div>
+        </div>
+    @endif
 @endsection
